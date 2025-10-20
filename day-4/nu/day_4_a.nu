@@ -4,10 +4,9 @@ def get_columns [] { $in | first | length }
 def get_rows [] { $in | length }
 
 const DIRS = [
-  [ 1,  1], [ 1, 0], [0, -1],
-  [-1,  1], [-1, 0], [0,  1],
-  [-1, -1],
-  [ 1, -1]
+  [ 1,  1], [ 1,  0], [0, -1],
+  [-1,  1], [-1,  0], [0,  1],
+  [-1, -1], [ 1, -1]
 ]
 
 def main [input: path]: [ nothing -> int ] {
