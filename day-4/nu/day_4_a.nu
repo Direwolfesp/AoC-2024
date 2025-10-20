@@ -9,7 +9,7 @@ const DIRS = [
   [-1, -1], [ 1, -1]
 ]
 
-def main [input: path]: [ nothing -> int ] {
+def main [input: path, --visual(-v)]: [ nothing -> int ] {
   let matrix = open $input
     | lines
     | split chars
@@ -17,6 +17,7 @@ def main [input: path]: [ nothing -> int ] {
   let rows = $matrix | get_rows 
   let cols = $matrix | get_columns 
   mut res = 0;
+  mut coords: list<list<int>> = []
 
   for i in 0..<$rows {
     let row = $matrix | get $i
@@ -38,11 +39,33 @@ def main [input: path]: [ nothing -> int ] {
             and (($matrix | get $di2 | get $dj2) == 'A')
             and (($matrix | get $di3 | get $dj3) == 'S')) {
             $res += 1
+            $coords ++= [
+              [$i, $j]
+              [$di1, $dj1]
+              [$di2, $dj2]
+              [$di3, $dj3]
+            ]
           }
         }
       }
     }
   }
 
+  # Visual print of the results
+  if $visual {
+    for i in 0..<$rows {
+      let row = $matrix | get $i
+      for j in 0..<$cols {
+        let c: string = $matrix | get $i | get $j
+        if [$i, $j] in $coords {
+          print -n $"(ansi red)($c)(ansi reset)"
+        } else {
+          print -n $"($c)"
+        }
+        if $j == ($cols - 1) { print "" }
+      }
+    }
+  }
+  
   $res
 }
