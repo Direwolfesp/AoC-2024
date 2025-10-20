@@ -52,9 +52,8 @@ def main [input: path]: [ nothing -> int ] {
   while ($i < $rows) {
     let chunk_len = if ($i + $chunk_size) < $rows {
       $chunk_size
-    } else {
-      $rows - $i
-    }
+    } else { $rows - $i }
+
     $indices = $indices | append {start: $i, end: ($i + $chunk_len)}
     $i += $chunk_len;
   }
