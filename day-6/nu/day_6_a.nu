@@ -16,6 +16,13 @@ def char_to_dir [pos: string]: nothing -> record<i: int, j: int> {
   }
 }
 
+# advances input in `dir` direction
+def advance_pos [dir: record<i: int, j: int>]: [
+  record<i: int, j: int> -> record<i: int, j: int>
+] {
+  {i: ($in.i + $dir.i), j: ($in.j + $dir.j)}
+}
+
 # rotates direction 90º right
 def rotate_pos [pos: record<i: int, j: int>]: [
   nothing -> record<i: int, j: int>
@@ -26,13 +33,6 @@ def rotate_pos [pos: record<i: int, j: int>]: [
     { i:  0, j: -1} => { i: -1, j:  0},
     { i: -1, j:  0} => { i:  0, j:  1},
   }
-}
-
-# advances input in `dir` direction
-def advance_pos [dir: record<i: int, j: int>]: [
-  record<i: int, j: int> -> record<i: int, j: int>
-] {
-  {i: ($in.i + $dir.i), j: ($in.j + $dir.j)}
 }
 
 def main [input: path] {
