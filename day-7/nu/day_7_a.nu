@@ -5,16 +5,16 @@
 # combinations with repetitions = n^m = 2^m
 def solve_equation [eq: record<res: int, operands: list<int>>] {
   let m = ($eq.operands | length) - 1
-  let combs = 2 ** $m
 
-  0..<$combs
+  0..<(2 ** $m)
   | enumerate
   | any {|comb| 
     # gather a list of operations
     let ops = $comb.item
       | format bits
-      | str replace --all ' ' '' 
-      | str substring ($m * -1).. 
+      | str replace --all ' ' ''
+      | fill --character '0' --width $m
+      | str substring ($m * -1)..
       | str replace --all '1' '+'
       | str replace --all '0' '*'
       | split chars
