@@ -13,8 +13,11 @@ def solve_equation [eq: record<res: int, operands: list<int>>] {
     let ops = $comb.item
       | format bits
       | str replace --all ' ' ''
-      | fill --character '0' --width $m
-      | str substring ($m * -1)..
+      | if ($in | str length) < $m {
+          fill --character '0' --width $m --alignment right
+      } else {
+          str substring ($m * -1)..
+      }
       | str replace --all '1' '+'
       | str replace --all '0' '*'
       | split chars
@@ -39,8 +42,8 @@ def solve_equation [eq: record<res: int, operands: list<int>>] {
 def main [input: path] {
   let equations = open $input
     | lines 
-    | par-each {|l|
-        let nums = $l | split words | into int
+    | par-each {
+        let nums = split words | into int
         {
           res: ($nums | first),
           operands: [($nums | slice 1..)]
