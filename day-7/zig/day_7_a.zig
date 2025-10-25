@@ -24,19 +24,19 @@ pub fn main() !void {
 
     var sum: u64 = 0;
     var iter = std.mem.tokenizeScalar(u8, contents, '\n');
+
     while (iter.next()) |line| {
         var num_iter = std.mem.tokenizeAny(u8, line, ": ");
-
         const res = num_iter.next().?;
         const n_res = try std.fmt.parseInt(u64, res, 10);
 
         var nums: [16]u32 = undefined;
         var i: u32 = 0;
+
         while (num_iter.next()) |num| : (i += 1)
             nums[i] = try std.fmt.parseInt(u32, num, 10);
 
-        if (is_solvable(n_res, 0, nums[0..i], i))
-            sum += n_res;
+        if (is_solvable(n_res, 0, nums[0..i], i)) sum += n_res;
     }
     std.debug.print("Sol: {d}\n", .{sum});
 }
