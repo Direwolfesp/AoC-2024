@@ -5,6 +5,7 @@ const N_LINES = 1000;
 
 fn part_a(filepath: []const u8) !u32 {
     var file = try std.fs.cwd().openFile(filepath, .{});
+    defer file.close();
     var line_buf: [128]u8 = undefined;
     var reader = file.readerStreaming(&line_buf);
 
