@@ -1,5 +1,4 @@
 #!/usr/bin/env nu
-
 def main [input: path] {
   let contents = open $input | lines 
 
@@ -12,17 +11,15 @@ def main [input: path] {
   # -> the pair [B|A] exists
   # or
   # -> the pair [A|B] does not exist
-  let is_valid = {|list|
-    $list | window 2 | all {|win|
-      (
-        ($orderings
+  let is_valid = {
+    window 2 | all {|win|
+      (($orderings
         | where before == $win.0 and after == $win.1
         | is-not-empty)
       or
        ($orderings
         | where before == $win.1 and after == $win.0
-        | is-empty)
-      )
+        | is-empty))
     }
   }
     
@@ -32,4 +29,3 @@ def main [input: path] {
   | par-each {|list| if (do $is_valid $list) { $list } }
   | reduce --fold 0 {|l, acc| $acc + ($l | get (($l | length) // 2))}
 }
-

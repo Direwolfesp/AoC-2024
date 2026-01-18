@@ -12,7 +12,7 @@ fn is_solvable(res: u64, acc: u64, nums: []const u32, depth: u32) bool {
 
 pub fn main() !void {
     var gpa: std.heap.GeneralPurposeAllocator(.{}) = .init;
-    defer _ = gpa.deinit();
+    defer std.debug.assert(gpa.deinit() == .ok);
     const alloc = gpa.allocator();
 
     const f_name: []const u8 = std.mem.span(std.os.argv[1]);

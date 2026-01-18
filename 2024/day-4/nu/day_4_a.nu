@@ -47,7 +47,6 @@ def main [input: path, --visual(-v)]: [ nothing -> int ] {
             ]
           }
         }
-      }
     }
   }
 
@@ -62,8 +61,6 @@ def main [input: path, --visual(-v)]: [ nothing -> int ] {
         } else {
           print -n $"($c)"
         }
-        if $j == ($cols - 1) { print "" }
-      }
     }
   }
   
